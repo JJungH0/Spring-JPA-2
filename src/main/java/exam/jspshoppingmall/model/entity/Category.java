@@ -1,5 +1,6 @@
 package exam.jspshoppingmall.model.entity;
 
+import exam.jspshoppingmall.model.entity.item.Item;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity @Data
-public class Category {
+public class Category extends BaseEntity{
     @Id
     @GeneratedValue
     @Column(name = "CATEGORY_ID")
@@ -24,7 +25,7 @@ public class Category {
     /**
      * 카테고리 계층 구조를 위한 필드들
      */
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PARENT_ID")
     private Category parent;
 
