@@ -1,5 +1,6 @@
 package exam.jspshoppingmall.model.entity;
 
+import exam.jspshoppingmall.model.embedded.Address;
 import exam.jspshoppingmall.model.status.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -18,11 +19,17 @@ public class Delivery extends BaseEntity{
     @JoinColumn(name = "ORDER_ID")
     private Order order;
 
-    private String city;
 
-    private String zipcode;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "DELIVERY_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "DELIVERY_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "DELIVERY_ZIPCODE"))
+    })
+    private Address address;
+
 
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
-
 }
