@@ -1,5 +1,6 @@
 package exam.jspshoppingmall.model.entity;
 
+import exam.jspshoppingmall.model.embedded.Address;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,11 +20,13 @@ public class Member extends BaseEntity{
     @Column(name = "NAME")
     private String name;
 
-    @Column(name = "STREET")
-    private String street;
-
-    @Column(name = "ZIPCODE")
-    private String zipcode;
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "city", column = @Column(name = "MEMBER_CITY")),
+            @AttributeOverride(name = "street", column = @Column(name = "MEMBER_STREET")),
+            @AttributeOverride(name = "zipcode", column = @Column(name = "MEMBER_ZIPCODE"))
+    })
+    private Address address;
 
     @OneToMany(mappedBy = "member")
     private List<Order> orders = new ArrayList<>();
